@@ -6,8 +6,8 @@ export default function CoffeesPage() {
   return (
     <>
       <PageHeader
-        title="Koleksi Kopi Kami"
-        description="Dari perbukitan Ethiopia yang semarak hingga tanah vulkanik Guatemala, setiap kopi kami menceritakan sebuah kisah. Jelajahi pilihan biji kopi single-origin kami."
+        title="Mengenal Biji Kopi Single-Origin"
+        description="Pelajari tentang karakteristik unik, profil rasa, dan kisah di balik biji kopi dari berbagai daerah di seluruh dunia. Setiap biji kopi memiliki cerita yang berbeda."
       />
       <div className="container mx-auto px-4 pb-16 md:pb-24">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
