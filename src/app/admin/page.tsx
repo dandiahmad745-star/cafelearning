@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { coffees } from '@/lib/data';
-import { guides } from '@/lib/data';
-import { blogPosts } from '@/lib/data';
+import { coffees as initialCoffees } from '@/lib/data';
+import { guides as initialGuides } from '@/lib/data';
+import { blogPosts as initialBlogPosts } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
@@ -15,8 +15,42 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import type { Coffee } from '@/lib/types';
+
 
 export default function AdminPage() {
+  const [coffees, setCoffees] = useState(initialCoffees);
+  const [guides, setGuides] = useState(initialGuides);
+  const [blogPosts, setBlogPosts] = useState(initialBlogPosts);
+  
+  const [selectedCoffee, setSelectedCoffee] = useState<Coffee | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  const handleEditClick = (coffee: Coffee) => {
+    setSelectedCoffee(coffee);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleSaveChanges = () => {
+    if (selectedCoffee) {
+        setCoffees(coffees.map(c => c.id === selectedCoffee.id ? selectedCoffee : c));
+        // Later we will save this to localStorage
+    }
+    setIsEditDialogOpen(false);
+    setSelectedCoffee(null);
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
@@ -51,7 +85,7 @@ export default function AdminPage() {
                       <TableCell>{coffee.origin}</TableCell>
                       <TableCell>{coffee.roast}</TableCell>
                       <TableCell className="text-right">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleEditClick(coffee)}>
                           Edit
                         </Button>
                       </TableCell>
@@ -131,6 +165,36 @@ export default function AdminPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Coffee</DialogTitle>
+          </DialogHeader>
+          {selectedCoffee && (
+             <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">Name</Label>
+                    <Input id="name" value={selectedCoffee.name} onChange={(e) => setSelectedCoffee({...selectedCoffee, name: e.target.value})} className="col-span-3" />
+                </div>
+                 <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="origin" className="text-right">Origin</Label>
+                    <Input id="origin" value={selectedCoffee.origin} onChange={(e) => setSelectedCoffee({...selectedCoffee, origin: e.target.value})} className="col-span-3" />
+                </div>
+                 <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="roast" className="text-right">Roast</Label>
+                    <Input id="roast" value={selectedCoffee.roast} onChange={(e) => setSelectedCoffee({...selectedCoffee, roast: e.target.value as 'Light' | 'Medium' | 'Dark'})} className="col-span-3" />
+                </div>
+             </div>
+          )}
+          <DialogFooter>
+            <DialogClose asChild>
+                <Button type="button" variant="secondary">Cancel</Button>
+            </DialogClose>
+            <Button type="button" onClick={handleSaveChanges}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
