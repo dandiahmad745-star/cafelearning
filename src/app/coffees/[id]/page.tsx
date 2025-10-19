@@ -14,16 +14,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
+import type { Coffee } from '@/lib/types';
 
-export default function CoffeeDetailPage({ params }: { params: { id: string } }) {
+function CoffeeDetailContent({ coffee }: { coffee: Coffee }) {
   const [rating, setRating] = useState(0);
   const { toast } = useToast();
-  
-  const coffee = coffees.find((c) => c.id === params.id);
-
-  if (!coffee) {
-    notFound();
-  }
 
   const image = PlaceHolderImages.find((img) => img.id === coffee.imageId);
 
@@ -34,7 +29,7 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
     const comment = formData.get('comment');
 
     if (!author || !comment || rating === 0) {
-       toast({
+      toast({
         title: 'Ulasan Tidak Lengkap',
         description: 'Harap berikan nama Anda, peringkat, dan komentar.',
         variant: 'destructive',
@@ -44,38 +39,37 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
 
     // In a real app, you would submit this data to a server
     console.log({ author, comment, rating });
-    
+
     toast({
-        title: 'Ulasan Dikirim!',
-        description: 'Terima kasih atas masukan Anda.',
+      title: 'Ulasan Dikirim!',
+      description: 'Terima kasih atas masukan Anda.',
     });
-    
+
     e.currentTarget.reset();
     setRating(0);
   };
-
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
         <div className="w-full">
-            <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+          <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
             {image && (
-                <Image
+              <Image
                 src={image.imageUrl}
                 alt={image.description}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 data-ai-hint={image.imageHint}
-                />
+              />
             )}
-            </div>
+          </div>
         </div>
         <div>
           <h1 className="font-headline text-4xl md:text-5xl font-bold mb-2">{coffee.name}</h1>
           <p className="text-lg text-muted-foreground mb-4">{coffee.origin}</p>
-          
+
           <div className="flex flex-wrap gap-2 mb-6">
             <Badge variant="outline">{coffee.roast} Roast</Badge>
             {coffee.flavorProfile.map((flavor) => (
@@ -86,7 +80,6 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
           </div>
 
           <p className="text-base leading-relaxed">{coffee.longDescription}</p>
-          
         </div>
       </div>
 
@@ -118,24 +111,35 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
           </div>
         </div>
         <div>
-            <h2 className="font-headline text-3xl font-bold mb-6">Tinggalkan Ulasan</h2>
-            <form onSubmit={handleSubmitReview} className="space-y-4">
-                <div>
-                    <Label htmlFor="author">Nama Anda</Label>
-                    <Input id="author" name="author" placeholder="John Doe" required />
-                </div>
-                <div>
-                    <Label>Peringkat Anda</Label>
-                    <ReviewStars rating={rating} onRate={setRating} isInteractive={true} size={24} className="py-2" />
-                </div>
-                <div>
-                    <Label htmlFor="comment">Ulasan Anda</Label>
-                    <Textarea id="comment" name="comment" placeholder="Bagaimana pendapat Anda tentang kopi ini?" required />
-                </div>
-                <Button type="submit" className="w-full sm:w-auto">Kirim Ulasan</Button>
-            </form>
+          <h2 className="font-headline text-3xl font-bold mb-6">Tinggalkan Ulasan</h2>
+          <form onSubmit={handleSubmitReview} className="space-y-4">
+            <div>
+              <Label htmlFor="author">Nama Anda</Label>
+              <Input id="author" name="author" placeholder="John Doe" required />
+            </div>
+            <div>
+              <Label>Peringkat Anda</Label>
+              <ReviewStars rating={rating} onRate={setRating} isInteractive={true} size={24} className="py-2" />
+            </div>
+            <div>
+              <Label htmlFor="comment">Ulasan Anda</Label>
+              <Textarea id="comment" name="comment" placeholder="Bagaimana pendapat Anda tentang kopi ini?" required />
+            </div>
+            <Button type="submit" className="w-full sm:w-auto">Kirim Ulasan</Button>
+          </form>
         </div>
       </div>
     </div>
   );
+}
+
+// This is the new page component that will be rendered by Next.js
+export default function CoffeeDetailPage({ params }: { params: { id: string } }) {
+  const coffee = coffees.find((c) => c.id === params.id);
+
+  if (!coffee) {
+    notFound();
+  }
+
+  return <CoffeeDetailContent coffee={coffee} />;
 }
