@@ -88,10 +88,29 @@ export default {
             height: '0',
           },
         },
+        steam: {
+          '0%': {
+            transform: 'translateY(0) scaleX(1)',
+            opacity: '0',
+          },
+          '10%': {
+            transform: 'translateY(-0.5rem) scaleX(1.1)',
+            opacity: '1',
+          },
+          '70%': {
+            transform: 'translateY(-3rem) scaleX(1.3)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateY(-3rem)',
+            opacity: '0',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'steam': 'steam 3s linear infinite',
       },
     },
   },

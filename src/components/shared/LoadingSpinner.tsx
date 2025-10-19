@@ -22,42 +22,22 @@ const LoadingSpinner = ({ className }: { className?: string }) => {
           {/* Steam animations */}
           <path
             d="M6 5c.5.8 1.5 1 2.5 1s2-.2 2.5-1"
-            className="opacity-0 animate-[steam_3s_linear_infinite]"
+            className="opacity-0 animate-steam"
             style={{ animationDelay: '0s' }}
           />
           <path
             d="M10 5c.5.8 1.5 1 2.5 1s2-.2 2.5-1"
-            className="opacity-0 animate-[steam_3s_linear_infinite]"
+            className="opacity-0 animate-steam"
             style={{ animationDelay: '1s' }}
           />
           <path
             d="M14 5c.5.8 1.5 1 2.5 1s2-.2 2.5-1"
-            className="opacity-0 animate-[steam_3s_linear_infinite]"
+            className="opacity-0 animate-steam"
             style={{ animationDelay: '2s' }}
           />
         </svg>
       </div>
       <p className="text-sm text-muted-foreground animate-pulse">Brewing your page...</p>
-      <style jsx>{`
-        @keyframes steam {
-          0% {
-            transform: translateY(0) scaleX(1);
-            opacity: 0;
-          }
-          10% {
-            transform: translateY(-0.5rem) scaleX(1.1);
-            opacity: 1;
-          }
-          70% {
-            transform: translateY(-3rem) scaleX(1.3);
-            opacity: 0;
-          }
-          100% {
-            transform: translateY(-3rem);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </div>
   );
 };
