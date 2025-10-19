@@ -1,11 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  coffees as initialCoffees,
-  guides as initialGuides,
-  blogPosts as initialBlogPosts,
-} from '@/lib/data';
+import initialData from '@/lib/data.json';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
@@ -29,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { Coffee, Guide, BlogPost } from '@/lib/types';
-import { Trash2, PlusCircle } from 'lucide-react';
+import { Trash2, PlusCircle, RotateCcw } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,7 +37,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
+import { useToast } from '@/hooks/use-toast';
 
 // Generic hook for using localStorage
 function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
@@ -51,6 +47,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => voi
     }
     try {
       const item = window.localStorage.getItem(key);
+      // If item exists in localStorage, use it. Otherwise, use initialValue.
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       console.log(error);
@@ -75,9 +72,10 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => voi
 
 
 export default function OwnerPage() {
-  const [coffees, setCoffees] = useLocalStorage<Coffee[]>('coffees', initialCoffees);
-  const [guides, setGuides] = useLocalStorage<Guide[]>('guides', initialGuides);
-  const [blogPosts, setBlogPosts] = useLocalStorage<BlogPost[]>('blogPosts', initialBlogPosts);
+  const [coffees, setCoffees] = useLocalStorage<Coffee[]>('coffees', initialData.coffees);
+  const [guides, setGuides] = useLocalStorage<Guide[]>('guides', initialData.guides);
+  const [blogPosts, setBlogPosts] = useLocalStorage<BlogPost[]>('blogPosts', initialData.blogPosts);
+  const { toast } = useToast();
 
   const [activeTab, setActiveTab] = useState('coffees');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -86,12 +84,13 @@ export default function OwnerPage() {
 
   const handleAddNew = () => {
     setIsNew(true);
+    const timestamp = Date.now();
     if (activeTab === 'coffees') {
-        setEditingItem({ id: `new-coffee-${Date.now()}`, name: '', origin: '', roast: 'Medium', flavorProfile: [], description: '', longDescription: '', imageId: '', expertNotes: [] });
+        setEditingItem({ id: `new-coffee-${timestamp}`, name: '', origin: '', roast: 'Medium', flavorProfile: [], description: '', longDescription: '', imageId: '', expertNotes: [] });
     } else if (activeTab === 'guides') {
-        setEditingItem({ id: `new-guide-${Date.now()}`, title: '', description: '', imageId: '', steps: [] });
+        setEditingItem({ id: `new-guide-${timestamp}`, title: '', description: '', imageId: '', steps: [] });
     } else if (activeTab === 'blog') {
-        setEditingItem({ id: `new-blog-${Date.now()}`, title: '', author: '', date: new Date().toISOString().split('T')[0], excerpt: '', content: '', imageId: '' });
+        setEditingItem({ id: `new-blog-${timestamp}`, title: '', author: '', date: new Date().toISOString().split('T')[0], excerpt: '', content: '', imageId: '' });
     }
     setIsDialogOpen(true);
   };
@@ -110,6 +109,7 @@ export default function OwnerPage() {
     } else if (activeTab === 'blog') {
         setBlogPosts(blogPosts.filter(b => b.id !== id));
     }
+    toast({ title: "Item Deleted", description: "The item has been removed successfully." });
   };
 
 
@@ -125,7 +125,6 @@ export default function OwnerPage() {
         }
     } else if (activeTab === 'guides') {
         const guide = editingItem as Guide;
-        // Simple steps parsing for now, assuming "Title;Instruction" format per line
         if (typeof (guide as any).stepsRaw === 'string') {
             guide.steps = ((guide as any).stepsRaw as string).split('\n').map(line => {
                 const [title, instruction] = line.split(';');
@@ -149,6 +148,17 @@ export default function OwnerPage() {
 
     setIsDialogOpen(false);
     setEditingItem(null);
+    toast({ title: "Changes Saved", description: "Your changes have been saved successfully." });
+  };
+  
+  const handleResetToTemplate = () => {
+    setCoffees(initialData.coffees);
+    setGuides(initialData.guides);
+    setBlogPosts(initialData.blogPosts);
+    toast({
+      title: "Data Reset to Template",
+      description: "All content has been restored from the default template.",
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -281,7 +291,27 @@ export default function OwnerPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Owner Dashboard</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Owner Dashboard</h1>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" size="sm"><RotateCcw className="mr-2 h-4 w-4" /> Reset to Template</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Reset all content?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will discard all your current changes and restore the content from the original template file. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleResetToTemplate}>Reset Content</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-3">
