@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Menu, Coffee, ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '@/components/icons/Logo';
 import { cn } from '@/lib/utils';
 import {
@@ -95,6 +95,7 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
+                <SheetTitle className="sr-only">Menu</SheetTitle>
               <div className="flex flex-col gap-6 pt-8">
                 <Link href="/" className="mb-4 flex items-center gap-2" onClick={() => setSheetOpen(false)}>
                   <Logo className="h-6 w-6 text-primary" />
