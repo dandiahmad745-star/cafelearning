@@ -80,13 +80,6 @@ export default function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-4">
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/profile">
-              <Coffee className="h-[1.2rem] w-[1.2rem]" />
-              <span className="sr-only">Profile</span>
-            </Link>
-          </Button>
-
           <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
