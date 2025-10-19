@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import Loading from './loading';
 
 export const metadata: Metadata = {
   title: 'Netlify Brew',
@@ -30,7 +32,9 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col">
         <Header />
-        <main className="flex-grow flex flex-col">{children}</main>
+        <main className="flex-grow flex flex-col">
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </main>
         <Footer />
         <Toaster />
       </body>
