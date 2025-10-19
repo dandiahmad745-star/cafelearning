@@ -1,0 +1,33 @@
+
+{
+  "Home": {
+    "heroTitle": "Jelajahi Dunia Kopi.",
+    "heroSubtitle": "Pelajari koleksi biji kopi single-origin kami dan kuasai seni menyeduh.",
+    "heroButton": "Lihat Semua Kopi",
+    "featuredCoffeesTitle": "Kopi Unggulan",
+    "guidesTitle": "Sempurnakan Seduhan Anda",
+    "guidesSubtitle": "Baik Anda seorang pemula atau barista berpengalaman, panduan kami akan membantu Anda membuka potensi penuh dari kopi Anda.",
+    "guidesButton": "Jelajahi Semua Panduan"
+  },
+  "Navigation": {
+    "coffees": "Kenali Biji Kopi",
+    "tools": "Peralatan Barista",
+    "more": "Lainnya",
+    "guides": "Panduan Seduh",
+    "blog": "Blog",
+    "forum": "Forum"
+  },
+  "Footer": {
+    "coffeesTitle": "Kenali Biji Kopi",
+    "coffeesDescription": "Jelajahi berbagai jenis biji kopi dari seluruh dunia.",
+    "toolsTitle": "Peralatan Barista",
+    "toolsDescription": "Temukan peralatan penting yang digunakan oleh para profesional.",
+    "guidesTitle": "Panduan Seduh",
+    "guidesDescription": "Pelajari cara menyeduh kopi yang sempurna dengan panduan langkah demi langkah.",
+    "blogTitle": "Blog",
+    "blogDescription": "Baca cerita, tips, dan wawasan dari dunia kopi.",
+    "forumTitle": "Forum",
+    "forumDescription": "Bergabunglah dengan komunitas dan diskusikan semua hal tentang kopi.",
+    "rights": "Hak cipta dilindungi undang-undang."
+  }
+}

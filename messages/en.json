@@ -1,0 +1,33 @@
+
+{
+  "Home": {
+    "heroTitle": "Explore the World of Coffee.",
+    "heroSubtitle": "Browse our collection of single-origin beans and master the art of brewing.",
+    "heroButton": "Shop All Coffees",
+    "featuredCoffeesTitle": "Featured Coffees",
+    "guidesTitle": "Perfect Your Brew",
+    "guidesSubtitle": "Whether you're a beginner or a seasoned barista, our guides will help you unlock the full potential of your coffee.",
+    "guidesButton": "Explore All Guides"
+  },
+  "Navigation": {
+    "coffees": "Discover Beans",
+    "tools": "Barista Tools",
+    "more": "More",
+    "guides": "Brewing Guides",
+    "blog": "Blog",
+    "forum": "Forum"
+  },
+  "Footer": {
+    "coffeesTitle": "Discover Beans",
+    "coffeesDescription": "Explore our curated selection of coffees from around the world.",
+    "toolsTitle": "Barista Tools",
+    "toolsDescription": "Find the essential gear used by professionals.",
+    "guidesTitle": "Brewing Guides",
+    "guidesDescription": "Learn how to brew the perfect cup with our step-by-step guides.",
+    "blogTitle": "Blog",
+    "blogDescription": "Read stories, tips, and insights from the world of coffee.",
+    "forumTitle": "Forum",
+    "forumDescription": "Join the community and discuss all things coffee.",
+    "rights": "All rights reserved."
+  }
+}

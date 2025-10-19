@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, Coffee, ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -17,24 +18,25 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const mainNavLinks = [
-  { href: '/coffees', label: 'Kenali Biji Kopi' },
-  { href: '/tools', label: 'Peralatan Barista' },
+  { href: '/coffees', labelKey: 'coffees' },
+  { href: '/tools', labelKey: 'tools' },
 ];
 
 const otherNavLinks = [
-  { href: '/guides', label: 'Panduan Seduh' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/forum', label: 'Forum' },
+  { href: '/guides', labelKey: 'guides' },
+  { href: '/blog', labelKey: 'blog' },
+  { href: '/forum', labelKey: 'forum' },
 ];
-
-const allNavLinks = [...mainNavLinks, ...otherNavLinks];
 
 export default function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
+  const t = useTranslations('Navigation');
+
+  const allNavLinks = [...mainNavLinks, ...otherNavLinks];
 
   const NavLink = ({ href, label, className }: { href: string; label: string, className?: string }) => {
-    const isActive = pathname === href;
+    const isActive = pathname.includes(href);
     return (
       <Link
         href={href}
@@ -60,19 +62,19 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-6">
           {mainNavLinks.map((link) => (
-            <NavLink key={link.href} {...link} />
+            <NavLink key={link.href} href={link.href} label={t(link.labelKey)} />
           ))}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground dark:text-foreground/80 p-0 h-auto">
-                Lainnya
+                {t('more')}
                 <ChevronDown className="relative top-[1px] ml-1 h-3 w-3 transition duration-200" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               {otherNavLinks.map((link) => (
                  <DropdownMenuItem key={link.href} asChild>
-                    <Link href={link.href}>{link.label}</Link>
+                    <Link href={link.href}>{t(link.labelKey)}</Link>
                  </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -95,7 +97,7 @@ export default function Header() {
                   <span className="font-headline text-lg font-bold">Netlify Brew</span>
                 </Link>
                 {allNavLinks.map((link) => (
-                  <NavLink key={link.href} {...link} />
+                  <NavLink key={link.href} href={link.href} label={t(link.labelKey)} />
                 ))}
               </div>
             </SheetContent>
