@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import initialData from '@/lib/data.json';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { Coffee, Guide, BlogPost } from '@/lib/types';
-import { Trash2, PlusCircle, RotateCcw } from 'lucide-react';
+import { Trash2, PlusCircle, RotateCcw, Upload, Download } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,6 +38,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from '@/hooks/use-toast';
+import { Separator } from '@/components/ui/separator';
 
 // Generic hook for using localStorage
 function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
@@ -192,6 +193,60 @@ export default function OwnerPage() {
     }
   };
 
+  const handleExport = () => {
+    const dataToExport = {
+      coffees,
+      guides,
+      blogPosts,
+      expertNotes: initialData.expertNotes // Assuming expert notes are static for now
+    };
+    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'data.json';
+    link.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "Data Exported", description: "data.json has been downloaded." });
+  };
+
+  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target?.result;
+        if (typeof text !== 'string') {
+          throw new Error("File is not readable");
+        }
+        const importedData = JSON.parse(text);
+        
+        // Basic validation
+        if (importedData.coffees && importedData.guides && importedData.blogPosts) {
+          setCoffees(importedData.coffees);
+          setGuides(importedData.guides);
+          setBlogPosts(importedData.blogPosts);
+          // Note: expertNotes are not imported as they are part of the main data structure
+          toast({ title: "Import Successful", description: "All content has been updated." });
+        } else {
+          throw new Error("Invalid JSON format. Missing required keys: coffees, guides, blogPosts.");
+        }
+      } catch (error: any) {
+        toast({
+          variant: "destructive",
+          title: "Import Failed",
+          description: error.message || "Could not parse the JSON file.",
+        });
+      }
+    };
+    reader.readAsText(file);
+    // Reset file input to allow re-importing the same file
+    event.target.value = '';
+  };
+
 
   const renderCoffeeForm = (item: Coffee) => (
     <div className="grid gap-4 py-4">
@@ -306,28 +361,50 @@ export default function OwnerPage() {
     }
   }
 
+  const FormatExample = ({ title, data }: { title: string, data: any }) => (
+    <Card>
+        <CardHeader>
+            <CardTitle>{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto">
+                <code>{JSON.stringify(data, null, 2)}</code>
+            </pre>
+        </CardContent>
+    </Card>
+  )
+
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold">Owner Dashboard</h1>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" size="sm"><RotateCcw className="mr-2 h-4 w-4" /> Reset to Template</Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Reset all content?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will discard all your current changes and restore the content from the original template file. This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleResetToTemplate}>Reset Content</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-2 h-4 w-4" /> Export Data</Button>
+             <Button asChild variant="outline" size="sm">
+                <label htmlFor="import-file" className="cursor-pointer">
+                    <Upload className="mr-2 h-4 w-4" /> Import Data
+                    <input id="import-file" type="file" accept=".json" className="hidden" onChange={handleImport} />
+                </label>
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm"><RotateCcw className="mr-2 h-4 w-4" /> Reset</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Reset all content to template?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will discard all your current changes and restore the content from the original template file. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleResetToTemplate}>Reset Content</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+        </div>
       </div>
 
 
@@ -507,6 +584,23 @@ export default function OwnerPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      <Separator className="my-12" />
+
+      <div className="space-y-8">
+        <div>
+            <h2 className="text-2xl font-bold mb-4">Data Format Guide</h2>
+            <p className="text-muted-foreground mb-6">Use the formats below when creating your <code>data.json</code> file for import. The main file must be an object with three keys: <code>"coffees"</code>, <code>"guides"</code>, and <code>"blogPosts"</code>. Each key should contain an array of objects matching the corresponding format.</p>
+        </div>
+        <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
+            <FormatExample title="Coffees Format" data={initialData.coffees[0]} />
+            <FormatExample title="Guides Format" data={initialData.guides[0]} />
+            <FormatExample title="Blog Posts Format" data={initialData.blogPosts[0]} />
+        </div>
+      </div>
+
     </div>
   );
 }
+
+    
