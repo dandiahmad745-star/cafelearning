@@ -9,9 +9,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { use } from 'react';
 
 export default function GuideDetailPage({ params }: { params: { id:string } }) {
-  const guide = guides.find((g) => g.id === params.id);
+  const safeParams = use(Promise.resolve(params));
+  const guide = guides.find((g) => g.id === safeParams.id);
 
   if (!guide) {
     notFound();
