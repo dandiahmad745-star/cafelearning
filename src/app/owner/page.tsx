@@ -24,7 +24,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import type { Coffee, Guide, BlogPost } from '@/lib/types';
+import type { Coffee, Guide, BlogPost, BaristaTool } from '@/lib/types';
 import { Trash2, PlusCircle, RotateCcw, Upload, Download, ChevronDown } from 'lucide-react';
 import {
   AlertDialog,
@@ -81,11 +81,12 @@ export default function OwnerPage() {
   const [coffees, setCoffees] = useLocalStorage<Coffee[]>('coffees', initialData.coffees);
   const [guides, setGuides] = useLocalStorage<Guide[]>('guides', initialData.guides);
   const [blogPosts, setBlogPosts] = useLocalStorage<BlogPost[]>('blogPosts', initialData.blogPosts);
+  const [tools, setTools] = useLocalStorage<BaristaTool[]>('baristaTools', initialData.baristaTools);
   const { toast } = useToast();
 
   const [activeTab, setActiveTab] = useState('coffees');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Coffee | Guide | BlogPost | null>(null);
+  const [editingItem, setEditingItem] = useState<Coffee | Guide | BlogPost | BaristaTool | null>(null);
   const [isNew, setIsNew] = useState(false);
   const importItemRef = useRef<HTMLInputElement>(null);
 
@@ -117,6 +118,12 @@ export default function OwnerPage() {
             title: `${templateItem.title} (Copy)`,
             date: new Date().toISOString().split('T')[0]
         });
+    } else if (activeTab === 'tools') {
+        templateItem = initialData.baristaTools[0] || {} as BaristaTool;
+        setEditingItem({
+            ...templateItem,
+            name: `${templateItem.name} (Copy)`
+        });
     }
     setIsDialogOpen(true);
   };
@@ -135,13 +142,15 @@ export default function OwnerPage() {
         const importedItem = JSON.parse(text);
         const timestamp = Date.now();
 
-        let newItem: Coffee | Guide | BlogPost;
+        let newItem: Coffee | Guide | BlogPost | BaristaTool;
         if (activeTab === 'coffees') {
             newItem = { ...importedItem, id: `imported-coffee-${timestamp}` } as Coffee;
         } else if (activeTab === 'guides') {
             newItem = { ...importedItem, id: `imported-guide-${timestamp}` } as Guide;
-        } else {
+        } else if (activeTab === 'blog') {
             newItem = { ...importedItem, id: `imported-blog-${timestamp}`, date: new Date().toISOString().split('T')[0] } as BlogPost;
+        } else {
+             newItem = { ...importedItem, name: `${importedItem.name} (Imported)` } as BaristaTool;
         }
         
         setIsNew(true);
@@ -162,7 +171,7 @@ export default function OwnerPage() {
   };
 
 
-  const handleEdit = (item: Coffee | Guide | BlogPost) => {
+  const handleEdit = (item: Coffee | Guide | BlogPost | BaristaTool) => {
     setIsNew(false);
     setEditingItem({ ...item });
     setIsDialogOpen(true);
@@ -175,6 +184,8 @@ export default function OwnerPage() {
         setGuides(guides.filter(g => g.id !== id));
     } else if (activeTab === 'blog') {
         setBlogPosts(blogPosts.filter(b => b.id !== id));
+    } else if (activeTab === 'tools') {
+        setTools(tools.filter(t => t.name !== id));
     }
     toast({ title: "Item Deleted", description: "The item has been removed successfully." });
   };
@@ -211,6 +222,20 @@ export default function OwnerPage() {
         } else {
             setBlogPosts(blogPosts.map(b => b.id === blog.id ? blog : b));
         }
+    } else if (activeTab === 'tools') {
+        const tool = editingItem as BaristaTool;
+        if (isNew) {
+            // Since tools don't have a unique ID, we prevent adding duplicates by name
+            if(tools.some(t => t.name === tool.name)) {
+                toast({ variant: 'destructive', title: 'Error', description: `A tool with the name "${tool.name}" already exists.`});
+                return;
+            }
+            setTools([tool, ...tools]);
+        } else {
+            // When editing, the original name is needed if it's being changed
+            const originalName = (editingItem as any)._originalName || tool.name;
+            setTools(tools.map(t => t.name === originalName ? tool : t));
+        }
     }
 
     setIsDialogOpen(false);
@@ -222,6 +247,7 @@ export default function OwnerPage() {
     setCoffees(initialData.coffees);
     setGuides(initialData.guides);
     setBlogPosts(initialData.blogPosts);
+    setTools(initialData.baristaTools);
     toast({
       title: "Data Reset to Template",
       description: "All content has been restored from the default template.",
@@ -246,6 +272,7 @@ export default function OwnerPage() {
       coffees,
       guides,
       blogPosts,
+      baristaTools: tools
     };
     const dataStr = JSON.stringify(dataToExport, null, 2);
     const dataBlob = new Blob([dataStr], { type: "application/json" });
@@ -271,13 +298,17 @@ export default function OwnerPage() {
         }
         const importedData = JSON.parse(text);
         
-        if (importedData.coffees && importedData.guides && importedData.blogPosts) {
+        const requiredKeys = ['coffees', 'guides', 'blogPosts', 'baristaTools'];
+        const missingKeys = requiredKeys.filter(key => !(key in importedData));
+
+        if (missingKeys.length === 0) {
           setCoffees(importedData.coffees);
           setGuides(importedData.guides);
           setBlogPosts(importedData.blogPosts);
+          setTools(importedData.baristaTools);
           toast({ title: "Import Successful", description: "All content has been updated." });
         } else {
-          throw new Error("Invalid JSON format. Missing required keys: coffees, guides, blogPosts.");
+          throw new Error(`Invalid JSON format. Missing required keys: ${missingKeys.join(', ')}.`);
         }
       } catch (error: any) {
         toast({
@@ -384,6 +415,26 @@ export default function OwnerPage() {
     </div>
   );
   
+    const renderToolForm = (item: BaristaTool) => (
+    <div className="grid gap-4 py-4">
+        <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">Name</Label>
+            <Input id="name" value={item.name} onChange={handleInputChange} className="col-span-3" />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">Description</Label>
+            <Textarea id="description" value={item.description} onChange={handleInputChange} className="col-span-3" />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="imageId" className="text-right">Image ID</Label>
+            <Input id="imageId" value={item.imageId} onChange={handleInputChange} className="col-span-3" />
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="imageHint" className="text-right">Image Hint</Label>
+            <Input id="imageHint" value={item.imageHint} onChange={handleInputChange} className="col-span-3" />
+        </div>
+    </div>
+  );
 
   const renderForm = () => {
     if (!editingItem) return null;
@@ -391,6 +442,7 @@ export default function OwnerPage() {
         case 'coffees': return renderCoffeeForm(editingItem as Coffee);
         case 'guides': return renderGuideForm(editingItem as Guide);
         case 'blog': return renderBlogForm(editingItem as BlogPost);
+        case 'tools': return renderToolForm(editingItem as BaristaTool);
         default: return null;
     }
   }
@@ -401,6 +453,7 @@ export default function OwnerPage() {
         case 'coffees': return `${action} Coffee`;
         case 'guides': return `${action} Guide`;
         case 'blog': return `${action} Blog Post`;
+        case 'tools': return `${action} Barista Tool`;
         default: return 'Edit Item';
     }
   }
@@ -453,10 +506,11 @@ export default function OwnerPage() {
 
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="coffees">Manage Coffees</TabsTrigger>
           <TabsTrigger value="guides">Manage Guides</TabsTrigger>
           <TabsTrigger value="blog">Manage Blog</TabsTrigger>
+          <TabsTrigger value="tools">Manage Tools</TabsTrigger>
         </TabsList>
         
         <TabsContent value="coffees">
@@ -636,6 +690,65 @@ export default function OwnerPage() {
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="tools">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Barista Tools</CardTitle>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button size="sm"><PlusCircle className="mr-2 h-4 w-4" /> Add New <ChevronDown className="ml-2 h-4 w-4" /></Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuItem onClick={handleAddNewFromTemplate}>Add from Template</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => importItemRef.current?.click()}>Import from JSON</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {tools.map((tool) => (
+                    <TableRow key={tool.name}>
+                      <TableCell className="font-medium">{tool.name}</TableCell>
+                      <TableCell>{tool.description}</TableCell>
+                      <TableCell className="text-right space-x-2">
+                        <Button variant="outline" size="sm" onClick={() => handleEdit(tool)}>
+                          Edit
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                             <Button variant="destructive" size="sm"><Trash2 className="h-4 w-4"/></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete this tool.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleDelete(tool.name)}>Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
       </Tabs>
       
       <input 
@@ -668,10 +781,11 @@ export default function OwnerPage() {
             <h2 className="text-2xl font-bold mb-4">Data Format Guide</h2>
             <p className="text-muted-foreground mb-6">Use the formats below when creating your single-item <code>.json</code> file for import. The main file must be an object matching the corresponding format. For bulk import/export of all data, use the buttons at the top of the page.</p>
         </div>
-        <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
             <FormatExample title="Single Coffee Format" data={initialData.coffees[0]} />
             <FormatExample title="Single Guide Format" data={initialData.guides[0]} />
             <FormatExample title="Single Blog Post Format" data={initialData.blogPosts[0]} />
+            <FormatExample title="Single Tool Format" data={initialData.baristaTools[0]} />
         </div>
       </div>
 

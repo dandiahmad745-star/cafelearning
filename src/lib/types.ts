@@ -45,3 +45,10 @@ export type BlogPost = {
   content: string;
   imageId: string;
 };
+
+export type BaristaTool = {
+  name: string;
+  description: string;
+  imageId: string;
+  imageHint: string;
+};

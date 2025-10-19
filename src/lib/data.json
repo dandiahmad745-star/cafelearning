@@ -153,5 +153,43 @@
         "content": "Latte art may seem intimidating, but with a little practice, you can create beautiful designs. The key lies in two things: perfectly textured milk and a steady hand...",
         "imageId": "blog-1"
     }
+  ],
+  "baristaTools": [
+    {
+      "name": "Espresso Machine",
+      "description": "The heart of any cafe, used to produce rich, concentrated coffee shots.",
+      "imageId": "tool-1",
+      "imageHint": "espresso machine"
+    },
+    {
+      "name": "Coffee Grinder",
+      "description": "Essential for fresh, flavorful coffee. Burr grinders offer the most consistency.",
+      "imageId": "tool-2",
+      "imageHint": "coffee grinder"
+    },
+    {
+      "name": "Pour-Over Dripper (V60)",
+      "description": "A manual brewing device that allows for precise control over the extraction process.",
+      "imageId": "tool-3",
+      "imageHint": "pour over"
+    },
+    {
+      "name": "French Press",
+      "description": "A classic immersion brewer that produces a full-bodied and rich cup of coffee.",
+      "imageId": "tool-4",
+      "imageHint": "french press"
+    },
+    {
+      "name": "Milk Frothing Pitcher",
+      "description": "A stainless steel pitcher used for steaming and frothing milk for lattes and cappuccinos.",
+      "imageId": "tool-5",
+      "imageHint": "milk pitcher"
+    },
+    {
+      "name": "Digital Scale",
+      "description": "Crucial for measuring coffee and water to ensure a consistent brew ratio.",
+      "imageId": "tool-6",
+      "imageHint": "digital scale"
+    }
   ]
 }

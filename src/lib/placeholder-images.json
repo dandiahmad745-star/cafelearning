@@ -77,6 +77,42 @@
       "description": "A person writing in a notebook in a cafe.",
       "imageUrl": "https://images.unsplash.com/photo-1575389966063-548c5889d197?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjYWZlJTIwd3JpdGVyfGVufDB8fHx8MTc2MDg2ODIwNHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "cafe writer"
+    },
+    {
+      "id": "tool-1",
+      "description": "An espresso machine on a counter.",
+      "imageUrl": "https://images.unsplash.com/photo-1620807773206-49c1f2957417?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlc3ByZXNzbyUyMG1hY2hpbmV8ZW58MHx8fHwxNzYwODgxMTA3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "espresso machine"
+    },
+    {
+      "id": "tool-2",
+      "description": "A coffee grinder.",
+      "imageUrl": "https://images.unsplash.com/photo-1652067871206-6acf923a1ef5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwZ3JpbmRlcnxlbnwwfHx8fDE3NjA4ODExMDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee grinder"
+    },
+    {
+      "id": "tool-3",
+      "description": "A pour-over coffee dripper.",
+      "imageUrl": "https://images.unsplash.com/photo-1458872590620-5056e3311cad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3VyJTIwb3ZlcnxlbnwwfHx8fDE3NjA4NjgyMDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pour over"
+    },
+    {
+      "id": "tool-4",
+      "description": "A french press.",
+      "imageUrl": "https://images.unsplash.com/photo-1519082274554-1ca37fb8abb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmcmVuY2glMjBwcmVzc3xlbnwwfHx8fDE3NjA4NjgyMDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "french press"
+    },
+    {
+      "id": "tool-5",
+      "description": "A milk frothing pitcher.",
+      "imageUrl": "https://images.unsplash.com/photo-1550946554-f458a16ca958?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtaWxrJTIwcGl0Y2hlcnxlbnwwfHx8fDE3NjA4ODExMDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "milk pitcher"
+    },
+    {
+      "id": "tool-6",
+      "description": "A digital kitchen scale.",
+      "imageUrl": "https://images.unsplash.com/photo-1633428620790-99dc3ca163e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkaWdpdGFsJTIwc2NhbGV8ZW58MHx8fHwxNzYwODgxMTA3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "digital scale"
     }
   ]
 }
