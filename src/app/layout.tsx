@@ -7,8 +7,8 @@ import Footer from '@/components/layout/Footer';
 import Loading from './loading';
 
 export const metadata: Metadata = {
-  title: 'Netlify Brew',
-  description: 'Explore the world of coffee.',
+  title: 'Cafe Learning',
+  description: 'Dibuat oleh Arul Faathir',
 };
 
 export default function RootLayout({

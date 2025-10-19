@@ -55,7 +55,7 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center px-4">
         <Link href="/" className="mr-6 flex items-center gap-2" onClick={() => setSheetOpen(false)}>
           <Logo className="h-6 w-6 text-primary" />
-          <span className="font-headline text-lg font-bold">Netlify Brew</span>
+          <span className="font-headline text-lg font-bold">Cafe Learning</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
@@ -92,7 +92,7 @@ export default function Header() {
               <div className="flex flex-col gap-6 pt-8">
                 <Link href="/" className="mb-4 flex items-center gap-2" onClick={() => setSheetOpen(false)}>
                   <Logo className="h-6 w-6 text-primary" />
-                  <span className="font-headline text-lg font-bold">Netlify Brew</span>
+                  <span className="font-headline text-lg font-bold">Cafe Learning</span>
                 </Link>
                 {allNavLinks.map((link) => (
                   <NavLink key={link.href} href={link.href} label={link.label} />

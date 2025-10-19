@@ -58,9 +58,9 @@ const Footer = () => {
         <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center text-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
                 <Logo className="h-6 w-6 text-primary" />
-                <span className="font-headline text-lg font-bold">Netlify Brew</span>
+                <span className="font-headline text-lg font-bold">Cafe Learning</span>
             </div>
-            <p className="text-sm text-muted-foreground">&copy; {year} Netlify Brew. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">&copy; {year} Cafe Learning. Dibuat oleh Arul Faathir.</p>
         </div>
       </div>
     </footer>
