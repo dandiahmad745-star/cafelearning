@@ -7,13 +7,21 @@ import { coffees } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import ReviewStars from '@/components/shared/ReviewStars';
 import { Separator } from '@/components/ui/separator';
 import type { Coffee } from '@/lib/types';
+import { Progress } from '@/components/ui/progress';
 
 function CoffeeDetailContent({ coffee }: { coffee: Coffee }) {
-
   const image = PlaceHolderImages.find((img) => img.id === coffee.imageId);
+
+  const AttributeBar = ({ label, value }: { label: string; value: number }) => (
+    <div className="flex items-center gap-4">
+      <span className="w-20 text-sm font-medium text-muted-foreground">{label}</span>
+      <Progress value={value * 10} className="h-2 flex-1" />
+      <span className="w-8 text-right text-sm font-semibold">{value}/10</span>
+    </div>
+  );
+
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -51,27 +59,32 @@ function CoffeeDetailContent({ coffee }: { coffee: Coffee }) {
 
       <Separator className="my-12 md:my-16" />
 
-      {/* Reviews Section */}
+      {/* Expert Notes Section */}
       <div>
-        <h2 className="font-headline text-3xl font-bold mb-6">Ulasan Pelanggan</h2>
-        <div className="space-y-6">
-          {coffee.reviews.length > 0 ? (
-            coffee.reviews.map((review) => (
-              <Card key={review.id} className="bg-background">
+        <h2 className="font-headline text-3xl font-bold mb-8">Catatan dari Para Ahli</h2>
+        <div className="space-y-8">
+          {coffee.expertNotes.length > 0 ? (
+            coffee.expertNotes.map((note) => (
+              <Card key={note.id} className="bg-background">
                 <CardHeader>
-                  <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg">{review.author}</CardTitle>
-                    <ReviewStars rating={review.rating} />
+                  <div className="flex justify-between items-center mb-4">
+                    <CardTitle className="text-xl">{note.expertName}</CardTitle>
+                     <p className="text-sm text-muted-foreground">{new Date(note.date).toLocaleDateString()}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground">{new Date(review.date).toLocaleDateString()}</p>
+                   <div className="space-y-3 pt-2">
+                      <AttributeBar label="Aroma" value={note.aroma} />
+                      <AttributeBar label="Body" value={note.body} />
+                      <AttributeBar label="Flavor" value={note.flavor} />
+                      <AttributeBar label="Acidity" value={note.acidity} />
+                    </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{review.comment}</p>
+                    <p className="text-muted-foreground italic border-l-4 pl-4">"{note.notes}"</p>
                 </CardContent>
               </Card>
             ))
           ) : (
-            <p className="text-muted-foreground">Belum ada ulasan untuk kopi ini.</p>
+            <p className="text-muted-foreground">Belum ada catatan ahli untuk kopi ini.</p>
           )}
         </div>
       </div>

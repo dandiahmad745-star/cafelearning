@@ -5,25 +5,27 @@ export type Image = {
   imageHint: string;
 };
 
-export type Review = {
+export type ExpertNote = {
   id: string;
-  author: string;
-  rating: number;
-  comment: string;
+  expertName: string;
+  aroma: number;
+  body: number;
+  flavor: number;
+  acidity: number;
+  notes: string;
   date: string;
 };
 
 export type Coffee = {
   id: string;
   name: string;
-  price: number;
   origin: string;
   roast: 'Light' | 'Medium' | 'Dark';
   flavorProfile: string[];
   description: string;
   longDescription: string;
   imageId: string;
-  reviews: Review[];
+  expertNotes: ExpertNote[];
 };
 
 export type Guide = {
