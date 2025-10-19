@@ -6,7 +6,7 @@ import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Netlify Brew',
-  description: 'Discover your next favorite coffee.',
+  description: 'Pelajari semua tentang dunia kopi.',
 };
 
 export default function RootLayout({

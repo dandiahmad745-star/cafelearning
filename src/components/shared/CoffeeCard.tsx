@@ -57,12 +57,9 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ coffee }) => {
           ))}
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-lg font-semibold text-primary">
-          ${coffee.price.toFixed(2)}
-        </p>
-        <Button asChild size="sm" variant="outline">
-            <Link href={`/coffees/${coffee.id}`}>View</Link>
+      <CardFooter className="p-4 pt-0">
+        <Button asChild size="sm" variant="outline" className="w-full">
+            <Link href={`/coffees/${coffee.id}`}>Pelajari Lebih Lanjut</Link>
         </Button>
       </CardFooter>
     </Card>

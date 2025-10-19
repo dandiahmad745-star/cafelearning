@@ -28,14 +28,14 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20" />
         <div className="relative h-full flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-4xl md:text-7xl font-headline font-bold drop-shadow-lg mb-4">
-            Taste the World, One Cup at a Time.
+            Jelajahi Dunia Kopi.
           </h1>
           <p className="text-lg md:text-2xl max-w-3xl mb-8 drop-shadow-md">
-            Explore our curated collection of single-origin coffee beans and master the art of brewing.
+            Pelajari koleksi biji kopi single-origin kami dan kuasai seni menyeduh.
           </p>
           <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
             <Link href="/coffees">
-              Shop All Coffee <ArrowRight className="ml-2" />
+              Lihat Semua Kopi <ArrowRight className="ml-2" />
             </Link>
           </Button>
         </div>
@@ -45,7 +45,7 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-headline font-bold text-center mb-12 text-primary">
-            Featured Coffees
+            Kopi Unggulan
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredCoffees.map((coffee) => (
@@ -61,10 +61,10 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-headline font-bold mb-4 text-primary">
-                Perfect Your Brew
+                Sempurnakan Seduhan Anda
               </h2>
               <p className="text-muted-foreground text-lg mb-6">
-                Whether you're a novice or a seasoned barista, our guides will help you unlock the full potential of your coffee.
+                Baik Anda seorang pemula atau barista berpengalaman, panduan kami akan membantu Anda membuka potensi penuh dari kopi Anda.
               </p>
               <ul className="space-y-4 mb-8">
                 {guides.slice(0, 3).map((guide) => (
@@ -76,7 +76,7 @@ export default function Home() {
               </ul>
               <Button asChild variant="outline">
                 <Link href="/guides">
-                  Explore All Guides <ArrowRight className="ml-2" />
+                  Jelajahi Semua Panduan <ArrowRight className="ml-2" />
                 </Link>
               </Button>
             </div>

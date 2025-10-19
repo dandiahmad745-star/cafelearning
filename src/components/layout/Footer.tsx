@@ -12,8 +12,8 @@ const Footer = () => {
             <span className="font-headline text-lg font-bold">Netlify Brew</span>
           </div>
           <nav className="flex gap-6 text-muted-foreground text-sm">
-            <Link href="/coffees" className="hover:text-primary transition-colors">Coffee</Link>
-            <Link href="/guides" className="hover:text-primary transition-colors">Guides</Link>
+            <Link href="/coffees" className="hover:text-primary transition-colors">Biji Kopi</Link>
+            <Link href="/guides" className="hover:text-primary transition-colors">Panduan</Link>
             <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
             <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
           </nav>

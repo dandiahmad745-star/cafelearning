@@ -35,8 +35,8 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
 
     if (!author || !comment || rating === 0) {
        toast({
-        title: 'Incomplete Review',
-        description: 'Please provide your name, a rating, and a comment.',
+        title: 'Ulasan Tidak Lengkap',
+        description: 'Harap berikan nama Anda, peringkat, dan komentar.',
         variant: 'destructive',
       });
       return;
@@ -46,8 +46,8 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
     console.log({ author, comment, rating });
     
     toast({
-        title: 'Review Submitted!',
-        description: 'Thank you for your feedback.',
+        title: 'Ulasan Dikirim!',
+        description: 'Terima kasih atas masukan Anda.',
     });
     
     e.currentTarget.reset();
@@ -75,8 +75,7 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
         <div>
           <h1 className="font-headline text-4xl md:text-5xl font-bold mb-2">{coffee.name}</h1>
           <p className="text-lg text-muted-foreground mb-4">{coffee.origin}</p>
-          <p className="text-2xl font-semibold text-primary mb-6">${coffee.price.toFixed(2)}</p>
-
+          
           <div className="flex flex-wrap gap-2 mb-6">
             <Badge variant="outline">{coffee.roast} Roast</Badge>
             {coffee.flavorProfile.map((flavor) => (
@@ -88,7 +87,6 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
 
           <p className="text-base leading-relaxed">{coffee.longDescription}</p>
           
-          <Button size="lg" className="mt-8 w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90">Add to Cart</Button>
         </div>
       </div>
 
@@ -97,7 +95,7 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
       {/* Reviews Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
-          <h2 className="font-headline text-3xl font-bold mb-6">Customer Reviews</h2>
+          <h2 className="font-headline text-3xl font-bold mb-6">Ulasan Pelanggan</h2>
           <div className="space-y-6">
             {coffee.reviews.length > 0 ? (
               coffee.reviews.map((review) => (
@@ -115,26 +113,26 @@ export default function CoffeeDetailPage({ params }: { params: { id: string } })
                 </Card>
               ))
             ) : (
-              <p className="text-muted-foreground">No reviews yet. Be the first to share your thoughts!</p>
+              <p className="text-muted-foreground">Belum ada ulasan. Jadilah yang pertama memberikan masukan!</p>
             )}
           </div>
         </div>
         <div>
-            <h2 className="font-headline text-3xl font-bold mb-6">Leave a Review</h2>
+            <h2 className="font-headline text-3xl font-bold mb-6">Tinggalkan Ulasan</h2>
             <form onSubmit={handleSubmitReview} className="space-y-4">
                 <div>
-                    <Label htmlFor="author">Your Name</Label>
+                    <Label htmlFor="author">Nama Anda</Label>
                     <Input id="author" name="author" placeholder="John Doe" required />
                 </div>
                 <div>
-                    <Label>Your Rating</Label>
+                    <Label>Peringkat Anda</Label>
                     <ReviewStars rating={rating} onRate={setRating} isInteractive={true} size={24} className="py-2" />
                 </div>
                 <div>
-                    <Label htmlFor="comment">Your Review</Label>
-                    <Textarea id="comment" name="comment" placeholder="What did you think of the coffee?" required />
+                    <Label htmlFor="comment">Ulasan Anda</Label>
+                    <Textarea id="comment" name="comment" placeholder="Bagaimana pendapat Anda tentang kopi ini?" required />
                 </div>
-                <Button type="submit" className="w-full sm:w-auto">Submit Review</Button>
+                <Button type="submit" className="w-full sm:w-auto">Kirim Ulasan</Button>
             </form>
         </div>
       </div>

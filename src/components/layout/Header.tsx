@@ -11,8 +11,8 @@ import Logo from '@/components/icons/Logo';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { href: '/coffees', label: 'Coffee' },
-  { href: '/guides', label: 'Brewing Guides' },
+  { href: '/coffees', label: 'Biji Kopi' },
+  { href: '/guides', label: 'Panduan Seduh' },
   { href: '/blog', label: 'Blog' },
   { href: '/forum', label: 'Forum' },
 ];
