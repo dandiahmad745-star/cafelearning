@@ -40,7 +40,7 @@ export default function Header() {
         href={href}
         className={cn(
           'text-sm font-medium transition-colors hover:text-primary',
-          isActive ? 'text-primary' : 'text-muted-foreground',
+          isActive ? 'text-primary' : 'text-muted-foreground dark:text-foreground/80',
           className
         )}
         onClick={() => setSheetOpen(false)}
@@ -64,7 +64,7 @@ export default function Header() {
           ))}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground p-0 h-auto">
+              <Button variant="ghost" className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground dark:text-foreground/80 p-0 h-auto">
                 Lainnya
                 <ChevronDown className="relative top-[1px] ml-1 h-3 w-3 transition duration-200" />
               </Button>
