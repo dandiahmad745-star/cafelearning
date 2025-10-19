@@ -1,3 +1,82 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-image",
+      "description": "A cozy cafe interior with a person brewing coffee.",
+      "imageUrl": "https://images.unsplash.com/photo-1612192527395-06b72da6b35a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYWZlJTIwaW50ZXJpb3J8ZW58MHx8fHwxNzYwODMxMTgxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cafe interior"
+    },
+    {
+      "id": "coffee-1",
+      "description": "Close-up of freshly roasted coffee beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1675306408031-a9aad9f23308?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBiZWFuc3xlbnwwfHx8fDE3NjA4MzMwMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee beans"
+    },
+    {
+      "id": "coffee-2",
+      "description": "A bag of Ethiopian Yirgacheffe coffee beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1605711599412-775918dbe770?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBiYWd8ZW58MHx8fHwxNzYwNzQ4NjkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee bag"
+    },
+    {
+      "id": "coffee-3",
+      "description": "A cup of black coffee on a wooden table.",
+      "imageUrl": "https://images.unsplash.com/photo-1598908314732-07113901949e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjb2ZmZWUlMjBjdXB8ZW58MHx8fHwxNzYwODI1MzMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee cup"
+    },
+    {
+      "id": "coffee-4",
+      "description": "A bag of Colombian Supremo coffee beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1651761483492-7d2e26dd3455?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb2ZmZWUlMjBiYWd8ZW58MHx8fHwxNzYwNzQ4NjkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee bag"
+    },
+    {
+      "id": "coffee-5",
+      "description": "A shot of espresso being poured.",
+      "imageUrl": "https://images.unsplash.com/photo-1650967711453-0ba811b488ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlc3ByZXNzbyUyMHNob3R8ZW58MHx8fHwxNzYwODU1NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "espresso shot"
+    },
+    {
+      "id": "coffee-6",
+      "description": "A single coffee bean on a white background.",
+      "imageUrl": "https://images.unsplash.com/photo-1524350876685-274059332603?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjb2ZmZWUlMjBiZWFufGVufDB8fHx8MTc2MDg1NzM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee bean"
+    },
+    {
+      "id": "guide-1",
+      "description": "Pour-over coffee setup.",
+      "imageUrl": "https://images.unsplash.com/photo-1458872590620-5056e3311cad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwb3VyJTIwb3ZlcnxlbnwwfHx8fDE3NjA4NjgyMDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pour over"
+    },
+    {
+      "id": "guide-2",
+      "description": "A French press on a kitchen counter.",
+      "imageUrl": "https://images.unsplash.com/photo-1609902980959-8fc750449b73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmcmVuY2glMjBwcmVzc3xlbnwwfHx8fDE3NjA4NjgyMDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "french press"
+    },
+    {
+      "id": "guide-3",
+      "description": "An AeroPress coffee maker.",
+      "imageUrl": "https://images.unsplash.com/photo-1643945016492-e95a055908d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWVyb3ByZXNzJTIwY29mZmVlfGVufDB8fHx8MTc2MDgxMDYzOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aeropress coffee"
+    },
+    {
+      "id": "guide-4",
+      "description": "A cold brew coffee setup.",
+      "imageUrl": "https://images.unsplash.com/photo-1558122104-355edad709f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb2xkJTIwYnJld3xlbnwwfHx8fDE3NjA4NjgyMDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cold brew"
+    },
+    {
+      "id": "blog-1",
+      "description": "Latte art in a cup.",
+      "imageUrl": "https://images.unsplash.com/photo-1563311977-d285756282dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxsYXR0ZSUyMGFydHxlbnwwfHx8fDE3NjA4Mzc0MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "latte art"
+    },
+    {
+      "id": "blog-2",
+      "description": "A person writing in a notebook in a cafe.",
+      "imageUrl": "https://images.unsplash.com/photo-1575389966063-548c5889d197?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjYWZlJTIwd3JpdGVyfGVufDB8fHx8MTc2MDg2ODIwNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cafe writer"
+    }
+  ]
 }
