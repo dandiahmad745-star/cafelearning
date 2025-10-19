@@ -1,14 +1,14 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { blogPosts } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import PageHeader from '@/components/shared/PageHeader';
-import { use } from 'react';
 
 export default function BlogPostPage({ params }: { params: { id: string } }) {
-  const safeParams = use(Promise.resolve(params));
-  const post = blogPosts.find((p) => p.id === safeParams.id);
+  const post = blogPosts.find((p) => p.id === params.id);
 
   if (!post) {
     notFound();

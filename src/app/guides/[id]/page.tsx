@@ -1,3 +1,5 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { guides } from '@/lib/data';
@@ -9,11 +11,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { use } from 'react';
 
 export default function GuideDetailPage({ params }: { params: { id:string } }) {
-  const safeParams = use(Promise.resolve(params));
-  const guide = guides.find((g) => g.id === safeParams.id);
+  const guide = guides.find((g) => g.id === params.id);
 
   if (!guide) {
     notFound();

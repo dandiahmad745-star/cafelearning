@@ -2,7 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { useState, use } from 'react';
+import { useState } from 'react';
 import { coffees } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -18,9 +18,8 @@ import { Separator } from '@/components/ui/separator';
 export default function CoffeeDetailPage({ params }: { params: { id: string } }) {
   const [rating, setRating] = useState(0);
   const { toast } = useToast();
-  const safeParams = use(Promise.resolve(params));
   
-  const coffee = coffees.find((c) => c.id === safeParams.id);
+  const coffee = coffees.find((c) => c.id === params.id);
 
   if (!coffee) {
     notFound();
