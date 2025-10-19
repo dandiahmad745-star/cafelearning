@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { coffees as initialCoffees } from '@/lib/data';
 import { guides as initialGuides } from '@/lib/data';
 import { blogPosts as initialBlogPosts } from '@/lib/data';
@@ -33,22 +33,28 @@ export default function AdminPage() {
   const [guides, setGuides] = useState(initialGuides);
   const [blogPosts, setBlogPosts] = useState(initialBlogPosts);
   
-  const [selectedCoffee, setSelectedCoffee] = useState<Coffee | null>(null);
+  const [editingCoffee, setEditingCoffee] = useState<Coffee | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const handleEditClick = (coffee: Coffee) => {
-    setSelectedCoffee(coffee);
+    setEditingCoffee(coffee);
     setIsEditDialogOpen(true);
   };
 
   const handleSaveChanges = () => {
-    if (selectedCoffee) {
-        setCoffees(coffees.map(c => c.id === selectedCoffee.id ? selectedCoffee : c));
+    if (editingCoffee) {
+        setCoffees(coffees.map(c => c.id === editingCoffee.id ? editingCoffee : c));
         // Later we will save this to localStorage
     }
     setIsEditDialogOpen(false);
-    setSelectedCoffee(null);
+    setEditingCoffee(null);
   }
+
+  useEffect(() => {
+    if (!isEditDialogOpen) {
+        setEditingCoffee(null);
+    }
+  }, [isEditDialogOpen]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -172,19 +178,19 @@ export default function AdminPage() {
           <DialogHeader>
             <DialogTitle>Edit Coffee</DialogTitle>
           </DialogHeader>
-          {selectedCoffee && (
+          {editingCoffee && (
              <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">Name</Label>
-                    <Input id="name" value={selectedCoffee.name} onChange={(e) => setSelectedCoffee({...selectedCoffee, name: e.target.value})} className="col-span-3" />
+                    <Input id="name" value={editingCoffee.name} onChange={(e) => setEditingCoffee({...editingCoffee, name: e.target.value})} className="col-span-3" />
                 </div>
                  <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="origin" className="text-right">Origin</Label>
-                    <Input id="origin" value={selectedCoffee.origin} onChange={(e) => setSelectedCoffee({...selectedCoffee, origin: e.target.value})} className="col-span-3" />
+                    <Input id="origin" value={editingCoffee.origin} onChange={(e) => setEditingCoffee({...editingCoffee, origin: e.target.value})} className="col-span-3" />
                 </div>
                  <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="roast" className="text-right">Roast</Label>
-                    <Input id="roast" value={selectedCoffee.roast} onChange={(e) => setSelectedCoffee({...selectedCoffee, roast: e.target.value as 'Light' | 'Medium' | 'Dark'})} className="col-span-3" />
+                    <Input id="roast" value={editingCoffee.roast} onChange={(e) => setEditingCoffee({...editingCoffee, roast: e.target.value as 'Light' | 'Medium' | 'Dark'})} className="col-span-3" />
                 </div>
              </div>
           )}
