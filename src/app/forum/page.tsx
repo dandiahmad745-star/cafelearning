@@ -7,6 +7,8 @@ import { MessageSquare } from 'lucide-react';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { formatDistanceToNow } from 'date-fns';
 
+export const revalidate = 0;
+
 export default async function ForumPage() {
   const supabase = createSupabaseServerClient();
   const { data: { session }} = await supabase.auth.getSession();
