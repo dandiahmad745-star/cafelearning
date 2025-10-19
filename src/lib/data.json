@@ -191,5 +191,41 @@
       "imageId": "tool-6",
       "imageHint": "digital scale"
     }
+  ],
+  "forumUsers": [
+    {"id": "user-1", "name": "Alice", "avatarUrl": "https://picsum.photos/seed/alice/40/40"},
+    {"id": "user-2", "name": "Bob", "avatarUrl": "https://picsum.photos/seed/bob/40/40"},
+    {"id": "user-3", "name": "Charlie", "avatarUrl": "https://picsum.photos/seed/charlie/40/40"}
+  ],
+  "forumTopics": [
+    { 
+      "id": "1", 
+      "title": "What's your go-to morning brew?", 
+      "content": "Lately I've been really into a light roast Ethiopian Yirgacheffe using a V60. The floral notes are just amazing to wake up to. What about everyone else? Drip? Espresso? French press?",
+      "author": {"id": "user-1", "name": "Alice", "avatarUrl": "https://picsum.photos/seed/alice/40/40"}, 
+      "createdAt": "2 days ago",
+      "replies": [
+        {
+          "id": "r1-1",
+          "content": "Can't go wrong with a classic French press and a dark roast Sumatra. The full body and low acidity is perfect for the morning.",
+          "author": {"id": "user-2", "name": "Bob", "avatarUrl": "https://picsum.photos/seed/bob/40/40"},
+          "createdAt": "2 days ago"
+        },
+        {
+          "id": "r1-2",
+          "content": "I'm with you on the V60, Alice! I've been using it with a medium roast from Costa Rica. It's so clean and balanced.",
+          "author": {"id": "user-3", "name": "Charlie", "avatarUrl": "https://picsum.photos/seed/charlie/40/40"},
+          "createdAt": "1 day ago"
+        }
+      ]
+    },
+    { 
+      "id": "2", 
+      "title": "Best grinder under $200?", 
+      "content": "I'm looking to upgrade my blade grinder to a proper burr grinder. My budget is around $200. Any recommendations? I mostly do pour-over and occasionally French press.",
+      "author": {"id": "user-2", "name": "Bob", "avatarUrl": "https://picsum.photos/seed/bob/40/40"},
+      "createdAt": "5 days ago",
+      "replies": []
+    }
   ]
 }

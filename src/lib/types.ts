@@ -52,3 +52,25 @@ export type BaristaTool = {
   imageId: string;
   imageHint: string;
 };
+
+export type ForumUser = {
+  id: string;
+  name: string;
+  avatarUrl: string;
+}
+
+export type ForumReply = {
+  id: string;
+  content: string;
+  author: ForumUser;
+  createdAt: string;
+}
+
+export type ForumTopic = {
+  id: string;
+  title: string;
+  content: string;
+  author: ForumUser;
+  createdAt: string;
+  replies: ForumReply[];
+}
