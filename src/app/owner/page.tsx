@@ -85,12 +85,30 @@ export default function OwnerPage() {
   const handleAddNew = () => {
     setIsNew(true);
     const timestamp = Date.now();
+    let templateItem;
+
     if (activeTab === 'coffees') {
-        setEditingItem({ id: `new-coffee-${timestamp}`, name: '', origin: '', roast: 'Medium', flavorProfile: [], description: '', longDescription: '', imageId: '', expertNotes: [] });
+        templateItem = initialData.coffees[0] || {} as Coffee;
+        setEditingItem({ 
+            ...templateItem, 
+            id: `new-coffee-${timestamp}`, 
+            name: `${templateItem.name} (Copy)`
+        });
     } else if (activeTab === 'guides') {
-        setEditingItem({ id: `new-guide-${timestamp}`, title: '', description: '', imageId: '', steps: [] });
+        templateItem = initialData.guides[0] || {} as Guide;
+        setEditingItem({ 
+            ...templateItem, 
+            id: `new-guide-${timestamp}`, 
+            title: `${templateItem.title} (Copy)` 
+        });
     } else if (activeTab === 'blog') {
-        setEditingItem({ id: `new-blog-${timestamp}`, title: '', author: '', date: new Date().toISOString().split('T')[0], excerpt: '', content: '', imageId: '' });
+        templateItem = initialData.blogPosts[0] || {} as BlogPost;
+        setEditingItem({ 
+            ...templateItem, 
+            id: `new-blog-${timestamp}`, 
+            title: `${templateItem.title} (Copy)`,
+            date: new Date().toISOString().split('T')[0]
+        });
     }
     setIsDialogOpen(true);
   };
