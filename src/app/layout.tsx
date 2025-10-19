@@ -5,7 +5,6 @@ import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Loading from './loading';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
 import SupabaseProvider from '@/lib/supabase/provider';
 
 export const metadata: Metadata = {
@@ -13,6 +12,7 @@ export const metadata: Metadata = {
   description: 'Dibuat oleh Arul Faathir',
 };
 
+// This export is important for Netlify deployment.
 export const revalidate = 0;
 
 export default async function RootLayout({
@@ -20,11 +20,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createSupabaseServerClient();
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
   
   return (
     <html lang="en" className="dark">
@@ -41,7 +36,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col">
-        <SupabaseProvider session={session}>
+        <SupabaseProvider>
           <Header />
           <main className="flex-grow flex flex-col">
             <Suspense fallback={<Loading />}>{children}</Suspense>

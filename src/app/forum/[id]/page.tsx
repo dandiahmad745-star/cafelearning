@@ -1,13 +1,13 @@
 'use client';
 
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useSupabase } from '@/lib/supabase/provider';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { ForumTopic, ForumReply, Profile } from '@/lib/types';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { formatDistanceToNow } from 'date-fns';
@@ -110,36 +110,38 @@ function ReplyForm({ topicId }: { topicId: string }) {
     );
 }
 
-export default function TopicDetailPage({ params }: { params: { id: string } }) {
+export default function TopicDetailPage() {
+    const params = useParams();
+    const topicId = params.id as string;
     const { supabase } = useSupabase();
     const [topic, setTopic] = useState<TopicWithRelations | null>(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchTopic = async () => {
-            const { data, error } = await supabase
-                .from('forum_topics')
-                .select('*, author:profiles(*), replies:forum_replies(*, author:profiles(*))')
-                .eq('id', params.id)
-                .single();
+    const fetchTopic = useCallback(async () => {
+        if (!topicId) return;
+        setLoading(true);
+        const { data, error } = await supabase
+            .from('forum_topics')
+            .select('*, author:profiles(*), replies:forum_replies(*, author:profiles(*))')
+            .eq('id', topicId)
+            .single();
 
-            if (error || !data) {
-                console.error(error);
-                setLoading(false);
-                // We don't call notFound() immediately to let the component render and show a message if needed
-                return;
-            }
+        if (error || !data) {
+            console.error(error);
+            setTopic(null);
+        } else {
             // Sort replies by creation time
             if (data.replies) {
                 data.replies.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
             }
-            
             setTopic(data as TopicWithRelations);
-            setLoading(false);
-        };
+        }
+        setLoading(false);
+    }, [supabase, topicId]);
 
+    useEffect(() => {
         fetchTopic();
-    }, [supabase, params.id]);
+    }, [fetchTopic]);
 
     useEffect(() => {
         if (!topic) return;
@@ -164,9 +166,11 @@ export default function TopicDetailPage({ params }: { params: { id: string } }) 
 
                     setTopic(currentTopic => {
                         if (!currentTopic) return null;
+                        const newReplies = [...currentTopic.replies, newReply];
+                        newReplies.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
                         return {
                             ...currentTopic,
-                            replies: [...currentTopic.replies, newReply]
+                            replies: newReplies
                         };
                     });
                 }
@@ -183,7 +187,6 @@ export default function TopicDetailPage({ params }: { params: { id: string } }) 
     }
 
     if (!topic) {
-        // Now we can safely call notFound because the component has rendered
         notFound();
         return null;
     }

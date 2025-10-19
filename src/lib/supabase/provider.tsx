@@ -16,21 +16,26 @@ const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined
 
 export default function SupabaseProvider({
   children,
-  session,
 }: {
   children: React.ReactNode;
-  session: Session | null;
 }) {
   const [supabase] = useState(() => createSupabaseBrowserClient());
+  const [session, setSession] = useState<Session | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
       if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
         router.refresh();
       }
+    });
+
+    // Fetch initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
     });
 
     return () => {
