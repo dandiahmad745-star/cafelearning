@@ -2,6 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { use } from 'react';
 import { blogPosts } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -46,7 +47,8 @@ function BlogPostContent({ post }: { post: BlogPost }) {
 }
 
 export default function BlogPostPage({ params }: { params: { id: string } }) {
-  const post = blogPosts.find((p) => p.id === params.id);
+  const safeParams = use(params);
+  const post = blogPosts.find((p) => p.id === safeParams.id);
 
   if (!post) {
     notFound();

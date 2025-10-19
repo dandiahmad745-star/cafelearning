@@ -2,6 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { use } from 'react';
 import { guides } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import PageHeader from '@/components/shared/PageHeader';
@@ -59,7 +60,8 @@ function GuideDetailContent({ guide }: { guide: Guide }) {
 
 
 export default function GuideDetailPage({ params }: { params: { id:string } }) {
-  const guide = guides.find((g) => g.id === params.id);
+  const safeParams = use(params);
+  const guide = guides.find((g) => g.id === safeParams.id);
 
   if (!guide) {
     notFound();

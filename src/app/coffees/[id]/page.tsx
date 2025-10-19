@@ -2,7 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { coffees } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -135,7 +135,8 @@ function CoffeeDetailContent({ coffee }: { coffee: Coffee }) {
 
 // This is the new page component that will be rendered by Next.js
 export default function CoffeeDetailPage({ params }: { params: { id: string } }) {
-  const coffee = coffees.find((c) => c.id === params.id);
+  const safeParams = use(params);
+  const coffee = coffees.find((c) => c.id === safeParams.id);
 
   if (!coffee) {
     notFound();
