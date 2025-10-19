@@ -34,11 +34,9 @@ export default function OwnerPage() {
   const [blogPosts, setBlogPosts] = useState(initialBlogPosts);
   
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [selectedCoffee, setSelectedCoffee] = useState<Coffee | null>(null);
   const [editingCoffee, setEditingCoffee] = useState<Coffee | null>(null);
 
   const handleEditClick = (coffee: Coffee) => {
-    setSelectedCoffee(coffee);
     setEditingCoffee({ ...coffee }); // Create a mutable copy for the form
     setIsEditDialogOpen(true);
   };
@@ -49,9 +47,15 @@ export default function OwnerPage() {
         // Later we will save this to localStorage
     }
     setIsEditDialogOpen(false);
-    setSelectedCoffee(null);
     setEditingCoffee(null);
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (editingCoffee) {
+        const { id, value } = e.target;
+        setEditingCoffee({ ...editingCoffee, [id]: value });
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -179,15 +183,19 @@ export default function OwnerPage() {
              <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">Name</Label>
-                    <Input id="name" value={editingCoffee.name} onChange={(e) => setEditingCoffee({...editingCoffee, name: e.target.value})} className="col-span-3" />
+                    <Input id="name" value={editingCoffee.name} onChange={handleInputChange} className="col-span-3" />
                 </div>
                  <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="origin" className="text-right">Origin</Label>
-                    <Input id="origin" value={editingCoffee.origin} onChange={(e) => setEditingCoffee({...editingCoffee, origin: e.target.value})} className="col-span-3" />
+                    <Input id="origin" value={editingCoffee.origin} onChange={handleInputChange} className="col-span-3" />
                 </div>
                  <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="roast" className="text-right">Roast</Label>
-                    <Input id="roast" value={editingCoffee.roast} onChange={(e) => setEditingCoffee({...editingCoffee, roast: e.target.value as 'Light' | 'Medium' | 'Dark'})} className="col-span-3" />
+                    <Input id="roast" value={editingCoffee.roast} onChange={handleInputChange} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imageId" className="text-right">Image ID</Label>
+                    <Input id="imageId" value={editingCoffee.imageId} onChange={handleInputChange} className="col-span-3" />
                 </div>
              </div>
           )}
