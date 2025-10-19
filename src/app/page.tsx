@@ -35,7 +35,7 @@ export default function Home() {
           </p>
           <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
             <Link href="/coffees">
-              Shop All Coffees <ArrowRight className="ml-2" />
+              Explore All Coffees <ArrowRight className="ml-2" />
             </Link>
           </Button>
         </div>
