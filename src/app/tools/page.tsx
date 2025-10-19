@@ -45,8 +45,8 @@ export default function ToolsPage() {
   return (
     <>
       <PageHeader
-        title="Peralatan Penting Barista"
-        description="Jelajahi peralatan yang digunakan oleh para profesional untuk mengubah biji kopi menjadi secangkir kopi yang sempurna."
+        title="Essential Barista Tools"
+        description="Explore the equipment used by professionals to transform humble beans into the perfect cup."
       />
       <div className="container mx-auto px-4 pb-16 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

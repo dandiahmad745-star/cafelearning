@@ -59,7 +59,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ coffee }) => {
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button asChild size="sm" variant="outline" className="w-full">
-            <Link href={`/coffees/${coffee.id}`}>Pelajari Lebih Lanjut</Link>
+            <Link href={`/coffees/${coffee.id}`}>Learn More</Link>
         </Button>
       </CardFooter>
     </Card>

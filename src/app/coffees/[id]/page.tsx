@@ -61,7 +61,7 @@ function CoffeeDetailContent({ coffee }: { coffee: Coffee }) {
 
       {/* Expert Notes Section */}
       <div>
-        <h2 className="font-headline text-3xl font-bold mb-8">Catatan dari Para Ahli</h2>
+        <h2 className="font-headline text-3xl font-bold mb-8">Expert Notes</h2>
         <div className="space-y-8">
           {coffee.expertNotes.length > 0 ? (
             coffee.expertNotes.map((note) => (
@@ -84,7 +84,7 @@ function CoffeeDetailContent({ coffee }: { coffee: Coffee }) {
               </Card>
             ))
           ) : (
-            <p className="text-muted-foreground">Belum ada catatan ahli untuk kopi ini.</p>
+            <p className="text-muted-foreground">No expert notes for this coffee yet.</p>
           )}
         </div>
       </div>
