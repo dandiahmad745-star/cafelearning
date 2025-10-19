@@ -15,8 +15,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
 
-export const revalidate = 0;
-
 type TopicWithRelations = ForumTopic & {
     author: Profile;
     replies: (ForumReply & { author: Profile })[];
@@ -127,11 +125,14 @@ export default function TopicDetailPage({ params }: { params: { id: string } }) 
 
             if (error || !data) {
                 console.error(error);
-                notFound();
+                setLoading(false);
+                // We don't call notFound() immediately to let the component render and show a message if needed
                 return;
             }
             // Sort replies by creation time
-            data.replies.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+            if (data.replies) {
+                data.replies.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+            }
             
             setTopic(data as TopicWithRelations);
             setLoading(false);
@@ -182,7 +183,9 @@ export default function TopicDetailPage({ params }: { params: { id: string } }) 
     }
 
     if (!topic) {
+        // Now we can safely call notFound because the component has rendered
         notFound();
+        return null;
     }
 
     return (
