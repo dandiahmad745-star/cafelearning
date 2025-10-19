@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 const LoadingSpinner = ({ className }: { className?: string }) => {
   return (
-    <div className={cn('flex flex-col items-center justify-center gap-2', className)}>
+    <div className={cn('flex flex-col items-center justify-center gap-2 animate-blur-in', className)}>
       <div className="relative h-20 w-20 text-primary">
         <svg
           className="h-full w-full"

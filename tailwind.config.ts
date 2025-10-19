@@ -106,11 +106,22 @@ export default {
             opacity: '0',
           },
         },
+        'blur-in': {
+          '0%': {
+            filter: 'blur(10px)',
+            opacity: '0',
+          },
+          '100%': {
+            filter: 'blur(0)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'steam': 'steam 3s linear infinite',
+        'blur-in': 'blur-in 0.5s ease-out forwards',
       },
     },
   },
