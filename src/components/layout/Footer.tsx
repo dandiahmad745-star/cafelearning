@@ -46,7 +46,7 @@ const Footer = () => {
             {footerNavItems.map((item) => (
                 <Link href={item.href} key={item.title} className="group block h-full">
                     <Card className="text-center h-full hover:bg-muted/50 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center p-6">
-                        <CardHeader className="p-0">
+                        <CardHeader className="p-0 flex flex-col items-center justify-center">
                             {item.icon}
                             <CardTitle className="font-headline text-lg font-semibold group-hover:text-primary transition-colors">{item.title}</CardTitle>
                         </CardHeader>
