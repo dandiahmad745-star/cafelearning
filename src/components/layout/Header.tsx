@@ -3,32 +3,45 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, Coffee } from 'lucide-react';
+import { Menu, Coffee, ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '@/components/icons/Logo';
 import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
-const navLinks = [
-  { href: '/coffees', label: 'Biji Kopi' },
+const mainNavLinks = [
+  { href: '/coffees', label: 'Kenali Biji Kopi' },
+  { href: '/tools', label: 'Peralatan Barista' },
+];
+
+const otherNavLinks = [
   { href: '/guides', label: 'Panduan Seduh' },
   { href: '/blog', label: 'Blog' },
   { href: '/forum', label: 'Forum' },
 ];
 
+const allNavLinks = [...mainNavLinks, ...otherNavLinks];
+
 export default function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
 
-  const NavLink = ({ href, label }: { href: string; label: string }) => {
-    const isActive = pathname.startsWith(href);
+  const NavLink = ({ href, label, className }: { href: string; label: string, className?: string }) => {
+    const isActive = pathname === href;
     return (
       <Link
         href={href}
         className={cn(
           'text-sm font-medium transition-colors hover:text-primary',
-          isActive ? 'text-primary' : 'text-muted-foreground'
+          isActive ? 'text-primary' : 'text-muted-foreground',
+          className
         )}
         onClick={() => setSheetOpen(false)}
       >
@@ -46,9 +59,24 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {mainNavLinks.map((link) => (
             <NavLink key={link.href} {...link} />
           ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground p-0 h-auto">
+                Lainnya
+                <ChevronDown className="relative top-[1px] ml-1 h-3 w-3 transition duration-200" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              {otherNavLinks.map((link) => (
+                 <DropdownMenuItem key={link.href} asChild>
+                    <Link href={link.href}>{link.label}</Link>
+                 </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         <div className="ml-auto flex items-center gap-4">
@@ -72,7 +100,7 @@ export default function Header() {
                   <Logo className="h-6 w-6 text-primary" />
                   <span className="font-headline text-lg font-bold">Netlify Brew</span>
                 </Link>
-                {navLinks.map((link) => (
+                {allNavLinks.map((link) => (
                   <NavLink key={link.href} {...link} />
                 ))}
               </div>

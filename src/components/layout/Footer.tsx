@@ -11,10 +11,12 @@ const Footer = () => {
             <Logo className="h-6 w-6 text-primary" />
             <span className="font-headline text-lg font-bold">Netlify Brew</span>
           </div>
-          <nav className="flex gap-6 text-muted-foreground text-sm">
-            <Link href="/coffees" className="hover:text-primary transition-colors">Biji Kopi</Link>
-            <Link href="/guides" className="hover:text-primary transition-colors">Panduan</Link>
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-muted-foreground text-sm">
+            <Link href="/coffees" className="hover:text-primary transition-colors">Kenali Biji Kopi</Link>
+            <Link href="/tools" className="hover:text-primary transition-colors">Peralatan Barista</Link>
+            <Link href="/guides" className="hover:text-primary transition-colors">Panduan Seduh</Link>
             <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
+            <Link href="/forum" className="hover:text-primary transition-colors">Forum</Link>
             <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
           </nav>
         </div>
