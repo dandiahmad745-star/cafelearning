@@ -5,17 +5,27 @@ import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Loading from './loading';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
+import SupabaseProvider from '@/lib/supabase/provider';
 
 export const metadata: Metadata = {
   title: 'Cafe Learning',
   description: 'Dibuat oleh Arul Faathir',
 };
 
-export default function RootLayout({
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createSupabaseServerClient();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  
   return (
     <html lang="en" className="dark">
       <head>
@@ -31,12 +41,14 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow flex flex-col">
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </main>
-        <Footer />
-        <Toaster />
+        <SupabaseProvider session={session}>
+          <Header />
+          <main className="flex-grow flex flex-col">
+            <Suspense fallback={<Loading />}>{children}</Suspense>
+          </main>
+          <Footer />
+          <Toaster />
+        </SupabaseProvider>
       </body>
     </html>
   );

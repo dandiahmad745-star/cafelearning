@@ -53,24 +53,28 @@ export type BaristaTool = {
   imageHint: string;
 };
 
-export type ForumUser = {
+// Supabase-specific types
+export type Profile = {
   id: string;
-  name: string;
-  avatarUrl: string;
-}
-
-export type ForumReply = {
-  id: string;
-  content: string;
-  author: ForumUser;
-  createdAt: string;
-}
+  updated_at: string;
+  full_name: string;
+  avatar_url: string;
+};
 
 export type ForumTopic = {
   id: string;
+  created_at: string;
   title: string;
   content: string;
-  author: ForumUser;
-  createdAt: string;
-  replies: ForumReply[];
-}
+  author_id: string;
+  author?: Profile;
+};
+
+export type ForumReply = {
+  id: string;
+  created_at: string;
+  content: string;
+  author_id: string;
+  topic_id: string;
+  author?: Profile;
+};
