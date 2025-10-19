@@ -62,10 +62,12 @@ export default function AdminPage() {
         </TabsList>
         
         <TabsContent value="coffees">
+          <div className="flex justify-end mb-4">
+            <Button size="sm">Add New Coffee</Button>
+          </div>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader>
               <CardTitle>Coffees</CardTitle>
-              <Button size="sm">Add New Coffee</Button>
             </CardHeader>
             <CardContent>
               <Table>
